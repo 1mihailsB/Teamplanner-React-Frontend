@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import {UserContext} from '../State/UserContext'
 import Cookies from 'js-cookie'
+import Unauthorized from './Unauthorized'
 
 export default function Account(){
 
@@ -12,7 +13,7 @@ export default function Account(){
             return(<h2>Welcome, {String(user)} !</h2>)
         }
         else if(user==undefined){
-            return(<h2>Please log in</h2>)
+            return <Unauthorized />
         }else{
             return(<h2>Login error, please try again</h2>)
         }

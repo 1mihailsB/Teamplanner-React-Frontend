@@ -10,7 +10,7 @@ export default function Nav(){
 
     const [loggedUser, setUser] = useContext(UserContext)
 
-    //Runs on Google's "Login" button click
+    //Runs on successful Login with Google
     ////////////////////////////////////////////////////////////
     const login = (response) => {
         console.log("google response: ",response);
@@ -71,7 +71,7 @@ export default function Nav(){
                 </ul>
                 {loggedUser==undefined || loggedUser=='#$%^failed' ?
                 <GoogleLogin
-                    clientId={properties.clientId}
+                    clientId={properties.clientId}//add your google cliend ID to Properties/Properties.js
                     scope="profile email openid"
                     accessType="offline"
                     prompt="consent"
