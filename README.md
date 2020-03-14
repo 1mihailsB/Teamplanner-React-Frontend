@@ -1,8 +1,8 @@
 ## Practice Reat JS project
 
-**To createa a new React JS app run in terminal: __npx create-react-app my-app__ 
+** To createa a new React JS app run in terminal: __ npx create-react-app teamplanner-frontend __ 
 Then pull the files of this repository into your project
-run in terminal: __npm start__ **
+run in terminal: __ npm start __ **
 
 Consumes Spring Boot Rest Api.  
 Includes OAuth2 with Google.  
