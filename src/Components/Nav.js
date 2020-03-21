@@ -41,6 +41,19 @@ export default function Nav(){
     //Runs on Google's "Logout" button click
     ///////////////////////////////////////////////////////////////
     const logOut = () => {
+        (async () => {
+            const apiResponse  = await fetch('http://localhost:8080/oauth/logout', {
+                credentials: 'include',
+                method: 'POST',
+                headers: {
+                    'Accept':'text/plain',
+                    'Content-type':'text/plain'
+                }
+            });
+            const apiResponseObject = await apiResponse
+            console.log(apiResponseObject.text())
+        })()
+
         Cookies.remove('user')
         console.log("logOut")
         setUser(undefined)

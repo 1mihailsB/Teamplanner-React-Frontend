@@ -1,4 +1,4 @@
 export const properties = {
-    clientId: "add your Google Client ID here",
+    clientId: "x",
     backendPort: "http://localhost:8080"
 }
