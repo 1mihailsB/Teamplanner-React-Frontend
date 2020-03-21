@@ -9,7 +9,7 @@ import {properties} from '../Properties/Properties'
 export default function Nav(){
 
     const [loggedUser, setUser] = useContext(UserContext)
-
+    console.log(loggedUser)
     //Runs on successful Login with Google
     ////////////////////////////////////////////////////////////
     const login = (response) => {
@@ -17,6 +17,7 @@ export default function Nav(){
 
         (async () => {
             const apiResponse  = await fetch('http://localhost:8080/oauth/authCode', {
+                credentials: 'include',
                 method: 'POST',
                 headers: {
                     'Accept':'application/json',
@@ -24,16 +25,16 @@ export default function Nav(){
                 },
                 body: JSON.stringify({"authCode":response['code']})
             });
-        const apiResponseObject = await apiResponse.json()
-        if(apiResponse.status==200){
-            console.log("apiResponseObject: ", apiResponseObject)
-            Cookies.set('user', apiResponseObject['given_name'])
-            console.log("user: ",apiResponseObject['given_name'])
-            setUser(Cookies.get('user'))
-        }else{
-
-            setUser('#$%^failed')
-        }
+            const apiResponseObject = await apiResponse.json()
+            console.log(apiResponse)
+            if(apiResponse.status==200){
+                console.log("apiResponseObject: ", apiResponseObject)
+                Cookies.set('user', apiResponseObject['given_name'])
+                console.log("user: ",apiResponseObject['given_name'])
+                setUser(Cookies.get('user'))
+            }else{
+                setUser('#$%^failed')
+            }
         })()
     }
 
@@ -69,13 +70,13 @@ export default function Nav(){
                     </li>
                     </Link>
                 </ul>
-                {loggedUser==undefined || loggedUser=='#$%^failed' ?
+                {loggedUser===undefined || loggedUser==='#$%^failed' ||  loggedUser==='undefined'?
                 <GoogleLogin
                     clientId={properties.clientId}//add your google cliend ID to Properties/Properties.js
                     scope="profile email openid"
                     accessType="offline"
                     prompt="consent"
-                    redirectUri="http://localhost:8080"
+                    redirectUri={properties.backendPort}
                     responseType="code"
                     buttonText="Login"
                     onSuccess={login}

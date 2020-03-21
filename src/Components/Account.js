@@ -9,10 +9,10 @@ export default function Account(){
     console.log(user)
     console.log(Cookies.get('user'))
        
-        if (user != undefined&& user != "#$%^failed"){
+        if ((user!=='undefined' && user !== undefined) && user !== "#$%^failed"){
             return(<h2>Welcome, {String(user)} !</h2>)
         }
-        else if(user==undefined){
+        else if(user===undefined || user!=='undefined'){
             return <Unauthorized />
         }else{
             return(<h2>Login error, please try again</h2>)

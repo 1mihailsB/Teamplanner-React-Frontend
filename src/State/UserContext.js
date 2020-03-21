@@ -7,8 +7,9 @@ export const UserProvider = (props) =>{
     const [user, setUser] = useState(undefined)
 
     useEffect (()=>{
+
         setUser(Cookies.get('user'))
-        console.log("user context effect")
+        console.log("user context effect: ", user, user===undefined)
     },[])
 
     return(
