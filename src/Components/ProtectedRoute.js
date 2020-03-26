@@ -4,15 +4,16 @@ import {UserContext} from '../State/UserContext'
 import Cookies from 'js-cookie'
 
 export const ProtectedRoute = ({component: Component, ...rest}) =>{
-    const {user, setUser} = useContext(UserContext)
+    const [user, setUser] = useContext(UserContext)
+    setUser(Cookies.get('user'))
     console.log("user: ", user)
 
     return(
         <Route {...rest}
             render={props => {
-                if ((Cookies.get('user')!=='undefined' && Cookies.get('user') !== undefined) && Cookies.get('user') !== "#$%^failed"){
+                if ((user!=='undefined' && user !== undefined) && user !== "#$%^failed"){
                     return <Component {...props} />;
-                }else if(Cookies.get('user')===undefined || Cookies.get('user')==='undefined'){
+                }else if(user===undefined || user==='undefined'){
                     return <Redirect to={
                         {
                             pathname: "/unauthorized",
