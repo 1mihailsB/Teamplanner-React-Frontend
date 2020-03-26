@@ -18,12 +18,6 @@ function App() {
           <Route path="/unauthorized" component={Unauthorized} />
           <ProtectedRoute path="/about" component={About}/>
           <ProtectedRoute path="/account" component={Account} />
-          {/* <Route exact path="/about" exact >
-            <About />
-          </Route>
-          <Route exact path="/account" exact component={Account}/>
-           */}
-         
       </Switch>
       </Router>
     </UserProvider>
