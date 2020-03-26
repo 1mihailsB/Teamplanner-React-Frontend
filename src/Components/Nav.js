@@ -10,6 +10,8 @@ export default function Nav(){
 
     const [loggedUser, setUser] = useContext(UserContext)
     console.log(loggedUser)
+    const history = useHistory();
+
     //Runs on successful Login with Google
     ////////////////////////////////////////////////////////////
     const login = (response) => {
@@ -29,13 +31,20 @@ export default function Nav(){
             console.log(apiResponse)
             if(apiResponse.status==200){
                 console.log("apiResponseObject: ", apiResponseObject)
-                Cookies.set('user', apiResponseObject['given_name'])
+                //expiration time - 10 minutes, same as HttpOnly cookie with authorization code
+                //js-cookie library - 1/144 of 24 hours is 10 minutes.
+                Cookies.set('user', apiResponseObject['given_name'], {expires: 1/144})
                 console.log("user: ",apiResponseObject['given_name'])
                 setUser(Cookies.get('user'))
+
+                history.push('/account')
             }else{
                 setUser('#$%^failed')
+                
+                history.push('/account')
             }
         })()
+        
     }
 
     //Runs on Google's "Logout" button click
