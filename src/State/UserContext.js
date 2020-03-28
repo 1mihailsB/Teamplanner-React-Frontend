@@ -4,13 +4,8 @@ import Cookies from 'js-cookie'
 export const UserContext = createContext()
 
 export const UserProvider = (props) =>{
-    const [user, setUser] = useState(undefined)
-
-    useEffect (()=>{
-
-        setUser(Cookies.get('user'))
-        console.log("user context effect: ", user, user===undefined)
-    },[])
+    
+    const [user, setUser] = useState(Cookies.get('nickname'))
 
     return(
         <UserContext.Provider value={[user, setUser]}>

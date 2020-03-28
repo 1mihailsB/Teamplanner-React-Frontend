@@ -8,15 +8,15 @@ import {properties} from '../Properties/Properties'
 
 export default function Nav(){
 
-    const [loggedUser, setUser] = useContext(UserContext)
-    console.log(loggedUser)
+    const [user, setUser] = useContext(UserContext)
+    console.log(user)
     const history = useHistory();
 
     //Runs on successful Login with Google
     ////////////////////////////////////////////////////////////
     const login = (response) => {
         console.log("google response: ",response);
-
+        
         (async () => {
             const apiResponse  = await fetch('http://localhost:8080/oauth/authCode', {
                 credentials: 'include',
@@ -27,24 +27,18 @@ export default function Nav(){
                 },
                 body: JSON.stringify({"authCode":response['code']})
             });
-            const apiResponseObject = await apiResponse.json()
+            const apiResponseObject = apiResponse
             console.log(apiResponse)
-            if(apiResponse.status==200){
-                console.log("apiResponseObject: ", apiResponseObject)
-                //expiration time - 10 minutes, same as HttpOnly cookie with authorization code
-                //js-cookie library - 1/144 of 24 hours is 10 minutes.
-                Cookies.set('user', apiResponseObject['given_name'], {expires: 1/144})
-                console.log("user: ",apiResponseObject['given_name'])
-                setUser(Cookies.get('user'))
-
+            if(apiResponse.status===200){
+                
+                console.log("response: ",apiResponseObject)
+                //nickname cookie is passed added by backed if login was successful
+                setUser(Cookies.get('nickname'))
                 history.push('/account')
             }else{
-                setUser('#$%^failed')
-                
-                history.push('/account')
+                setUser("*()failed")
             }
         })()
-        
     }
 
     //Runs on Google's "Logout" button click
@@ -58,13 +52,10 @@ export default function Nav(){
                     'Accept':'text/plain',
                     'Content-type':'text/plain'
                 }
-            });
-            const apiResponseObject = await apiResponse
-            console.log(apiResponseObject.text())
+            });      
         })()
 
-        Cookies.remove('user')
-        console.log("logOut")
+        Cookies.remove('nickname')
         setUser(undefined)
     }
 
@@ -92,7 +83,7 @@ export default function Nav(){
                     </li>
                     </Link>
                 </ul>
-                {loggedUser===undefined || loggedUser==='#$%^failed' ||  loggedUser==='undefined'?
+                {user===undefined || user==='*()failed' || user==='undefined' ?
                 <GoogleLogin
                     clientId={properties.clientId}//add your google cliend ID to Properties/Properties.js
                     scope="profile email openid"
@@ -107,7 +98,7 @@ export default function Nav(){
                     />
                     :
                     <GoogleLogout
-                        clientId="586290009563-ki3e28o344hisjirre95tp6ui4sl8oh2.apps.googleusercontent.com"
+                        clientId={properties.clientId}
                         buttonText="Logout"
                         onLogoutSuccess={logOut}
                     >

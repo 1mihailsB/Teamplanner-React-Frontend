@@ -21,7 +21,6 @@ function App() {
       </Switch>
       </Router>
     </UserProvider>
-    
   );
 }
 
