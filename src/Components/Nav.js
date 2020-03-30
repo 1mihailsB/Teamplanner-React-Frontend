@@ -83,7 +83,7 @@ export default function Nav(){
                     </li>
                     </Link>
                 </ul>
-                {user===undefined || user==='*()failed' || user==='undefined' ?
+                {user===undefined || user==='*()failed' ?
                 <GoogleLogin
                     clientId={properties.clientId}//add your google cliend ID to Properties/Properties.js
                     scope="profile email openid"

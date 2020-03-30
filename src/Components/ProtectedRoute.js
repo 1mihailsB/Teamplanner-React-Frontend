@@ -12,9 +12,9 @@ export const ProtectedRoute = ({component: Component, ...rest}) =>{
     return(
         <Route {...rest}
             render={props => {
-                if ((user!=='undefined' && user !== undefined) && user !== "*()failed" && user !=='*()unset'){
+                if (user !== undefined && user !== "*()failed" && user !=='*()unset'){
                     return <Component {...props} />;
-                }else if(user===undefined || user==='undefined'){
+                }else if(user===undefined){
                     return <Redirect to={
                         {
                             pathname: "/unauthorized",
