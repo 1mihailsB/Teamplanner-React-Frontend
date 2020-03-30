@@ -5,7 +5,7 @@ import Error from './Error'
 import {useHistory, useLocation} from 'react-router-dom'
 
 const ValidationSchema = Yup.object().shape({
-    nicknameField: Yup.string().min(1,"Minimal length: 1").max(16, "Maximum length: 16")
+    nicknameField: Yup.string().max(16, "Maximum length: 16")
     .required("Minimum length: 1")
     .matches("^[a-zA-Z0-9\\[\\]!@_-]{1,16}$", "Only A-Z, a-z, 0-9, []!@_- characters are allowed")
 });
@@ -16,7 +16,7 @@ export default function ChooseNickname(){
     const location = useLocation();
     
     if(nicknameTaken=='Username changed'){history.push(location.pathname)}
-    
+
     return(
         
         <Formik 
