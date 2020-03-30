@@ -16,9 +16,9 @@ export default function Nav(){
     ////////////////////////////////////////////////////////////
     const login = (response) => {
         console.log("google response: ",response);
-        
+        console.log(properties.oauthLoginUri);
         (async () => {
-            const apiResponse  = await fetch('http://localhost:8080/oauth/authCode', {
+            const apiResponse  = await fetch(properties.oauthLoginUri, {
                 credentials: 'include',
                 method: 'POST',
                 headers: {
@@ -45,7 +45,7 @@ export default function Nav(){
     ///////////////////////////////////////////////////////////////
     const logOut = () => {
         (async () => {
-            const apiResponse  = await fetch('http://localhost:8080/oauth/logout', {
+            const apiResponse  = await fetch(properties.oauthLogoutUri, {
                 credentials: 'include',
                 method: 'POST',
                 headers: {
@@ -55,7 +55,6 @@ export default function Nav(){
             });      
         })()
 
-        Cookies.remove('nickname')
         setUser(undefined)
     }
 
@@ -89,7 +88,7 @@ export default function Nav(){
                     scope="profile email openid"
                     accessType="offline"
                     prompt="consent"
-                    redirectUri={properties.backendPort}
+                    redirectUri={properties.backendAddress}
                     responseType="code"
                     buttonText="Login"
                     onSuccess={login}

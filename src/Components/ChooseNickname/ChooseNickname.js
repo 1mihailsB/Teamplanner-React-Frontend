@@ -3,6 +3,8 @@ import * as Yup from 'yup'
 import {Formik} from 'formik'
 import Error from './Error'
 import {useHistory, useLocation} from 'react-router-dom'
+import {properties} from '../../Properties/Properties'
+
 
 const ValidationSchema = Yup.object().shape({
     nicknameField: Yup.string().max(16, "Maximum length: 16")
@@ -25,7 +27,7 @@ export default function ChooseNickname(){
         onSubmit={(values, {setSubmitting}) => {
             setSubmitting(true);
             (async () => {
-                await fetch('http://localhost:8080/oauth/chooseNickname', {
+                await fetch(properties.chooseNicknameUri, {
                 credentials: 'include',
                 method: 'PUT',
                 headers: {
