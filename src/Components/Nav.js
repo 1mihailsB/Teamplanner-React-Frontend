@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import '../App.css'
-import {Link, useHistory} from "react-router-dom"
+import {Link, useHistory, useLocation} from "react-router-dom"
 import {GoogleLogin, GoogleLogout} from 'react-google-login'
 import {UserContext} from '../State/UserContext'
 import Cookies from 'js-cookie'
@@ -11,6 +11,7 @@ export default function Nav(){
     const [user, setUser] = useContext(UserContext)
     console.log(user)
     const history = useHistory();
+    const location = useLocation();
 
     //Runs on successful Login with Google
     ////////////////////////////////////////////////////////////
@@ -34,7 +35,7 @@ export default function Nav(){
                 console.log("response: ",apiResponseObject)
                 //nickname cookie is passed added by backed if login was successful
                 setUser(Cookies.get('nickname'))
-                history.push('/account')
+                history.push(location.pathname)
             }else{
                 setUser("*()failed")
             }
@@ -44,6 +45,10 @@ export default function Nav(){
     //Runs on Google's "Logout" button click
     ///////////////////////////////////////////////////////////////
     const logOut = () => {
+        if(Cookies.get('nickname')===undefined){
+            history.push(location.pathname)
+            return
+        }
         (async () => {
             const apiResponse  = await fetch(properties.oauthLogoutUri, {
                 credentials: 'include',
