@@ -16,19 +16,20 @@ export default function ChooseNickname(){
     const location = useLocation();
     
     if(nicknameTaken=='Username changed'){history.push(location.pathname)}
+    
     return(
         
         <Formik 
         initialValues={{nicknameField:""}}
         validationSchema={ValidationSchema}
-        onSubmit={(values, {setSubmitting, resetForm}) => {
+        onSubmit={(values, {setSubmitting}) => {
             setSubmitting(true);
             (async () => {
-                const apiResponse = await fetch('http://localhost:8080/oauth/chooseNickname', {
+                await fetch('http://localhost:8080/oauth/chooseNickname', {
                 credentials: 'include',
                 method: 'PUT',
                 headers: {
-                    'Accept':'application/json',
+                    'Accept':'text/plain',
                     'Content-type':'text/plain'
                 },
                 body: values.nicknameField
@@ -39,7 +40,6 @@ export default function ChooseNickname(){
         })()
         }}
         >
-            
             {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
                 
                 <form onSubmit={handleSubmit}>    
