@@ -1,4 +1,4 @@
 export const properties = {
     clientId: "x",
-    backendPort: "http://localhost:8080"
+    backendAddress: "http://localhost:8080"
 }
