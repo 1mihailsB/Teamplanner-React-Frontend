@@ -7,7 +7,6 @@ import ChooseNickname from './ChooseNickname/ChooseNickname'
 export const ProtectedRoute = ({component: Component, ...rest}) =>{
     const [user, setUser] = useContext(UserContext)
     setUser(Cookies.get('nickname'))
-    console.log("protected outside effect ", user, Cookies.get('nickname'))
 
     return(
         <Route {...rest}
