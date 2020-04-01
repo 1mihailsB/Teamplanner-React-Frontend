@@ -15,7 +15,7 @@ export default function About() {
     
     return(
         <div>
-            <h1>About</h1>
+            <h1 className="regular-text">About</h1>
             <button type="button" onClick={about} className="btn btn-info">JWT token. Use when logged in</button>
         </div>
     )

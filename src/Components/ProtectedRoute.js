@@ -24,7 +24,7 @@ export const ProtectedRoute = ({component: Component, ...rest}) =>{
                     
                     return <ChooseNickname {...props} />;
                 }else{
-                    return(<h2>Login error, please try again</h2>)
+                    return(<h2 className="regular-text">Login error, please try again</h2>)
                 }
             }}/>
     )

@@ -6,7 +6,7 @@ export default function Account(){
     const [user] = useContext(UserContext)
        
     return(
-    <h2>Welcome, {String(user)} !</h2>
+    <h2 className="regular-text">Welcome, {String(user)} !</h2>
     )
 }
             
