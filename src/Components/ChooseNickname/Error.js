@@ -5,6 +5,6 @@ export default Error = ({touched, message}) => {
         return <div>&nbsp;</div>
     }
     
-    return <div className="font-weight-bold">{message}</div>
+    return <div className="font-weight-bold text-danger">{message}</div>
     
 }
