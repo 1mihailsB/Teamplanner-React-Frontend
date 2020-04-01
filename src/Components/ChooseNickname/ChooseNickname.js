@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React,{useContext} from 'react'
 import * as Yup from 'yup'
 import {Formik} from 'formik'
 import Error from './Error'
-import {useHistory, useLocation} from 'react-router-dom'
 import {properties} from '../../Properties/Properties'
-
+import {UserContext} from '../../State/UserContext'
+import Cookies from 'js-cookie'
 
 const ValidationSchema = Yup.object().shape({
     nicknameField: Yup.string().max(16, "Maximum length: 16")
@@ -13,19 +13,17 @@ const ValidationSchema = Yup.object().shape({
 });
 
 export default function ChooseNickname(){
-    const [nicknameTaken, setNicknameTaken] = useState(false)
-    const history = useHistory();
-    const location = useLocation();
-    
-    if(nicknameTaken=='Username changed'){history.push(location.pathname)}
 
+    const [, setUser] = useContext(UserContext)
+    
     return(
         
         <Formik 
         initialValues={{nicknameField:""}}
         validationSchema={ValidationSchema}
-        onSubmit={(values, {setSubmitting}) => {
+        onSubmit={(values, {setSubmitting, setStatus}) => {
             setSubmitting(true);
+            console.log("representation:", values.nicknameField);
             (async () => {
                 await fetch(properties.chooseNicknameUri, {
                 credentials: 'include',
@@ -36,19 +34,23 @@ export default function ChooseNickname(){
                 },
                 body: values.nicknameField
                 }).then(response => response.text()).then(answer => {
-                    setNicknameTaken(answer)});
+                    setStatus(answer);
+                    if(answer == "Nickname changed"){setUser(Cookies.get('nickname'))}
+                });
 
-                setSubmitting(false)
-        })()
+                setSubmitting(false);
+            })()
+            
         }}
         >
-            {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting}) => (
+            {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, status}) => (
                 
                 <form onSubmit={handleSubmit}>    
                 <div className="form-group">
                     <h2 className="font-weight-bold text-dark">Set your nickname</h2>
                     <input type="text" 
-                    className={touched.nicknameField && errors.nicknameField? "form-control is-invalid":"form-control"}
+                    className={touched.nicknameField
+                        && errors.nicknameField? "form-control is-invalid":"form-control"}
                     name="nicknameField" 
                     id="nicknameField"
                     placeholder="nickname"
@@ -56,9 +58,8 @@ export default function ChooseNickname(){
                     onBlur={handleBlur}
                     value={values.nicknameField}
                     />
-                    {nicknameTaken == 'Username taken'? <h1 className="text-danger">Nickname Taken</h1> : <div>&nbsp;</div>}
                     <Error touched={touched.nicknameField} message={errors.nicknameField} />
-                    <pre>{JSON.stringify(values, null, 2)}</pre>
+                    {<h1>{status}</h1>}  
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Submit</button>
                 </form> 
