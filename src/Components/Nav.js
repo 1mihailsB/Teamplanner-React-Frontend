@@ -35,9 +35,10 @@ export default function Nav(){
                 console.log("response: ",apiResponseObject)
                 //nickname cookie is passed added by backed if login was successful
                 setUser(Cookies.get('nickname'))
-                history.push(location.pathname)
+                history.push("/")
             }else{
                 setUser("*()failed")
+                history.push(location.pathname)
             }
         })()
     }
@@ -59,8 +60,8 @@ export default function Nav(){
                 }
             });      
         })()
-
         setUser(undefined)
+        history.push(location.pathname)
     }
 
     return(
@@ -87,6 +88,11 @@ export default function Nav(){
                     </li>
                     </Link>
                 </ul>
+                {user!==undefined && user!=='*()failed' && user!=='*()unset' ?
+                <Link to="/chooseNickname"><div id="nickname">{user}</div></Link>
+                :
+                <div>&nbsp;</div>}
+
                 {user===undefined || user==='*()failed' ?
                 <GoogleLogin
                     clientId={properties.clientId}//add your google cliend ID to Properties/Properties.js
