@@ -5,6 +5,7 @@ import Error from './Error'
 import {properties} from '../../Properties/Properties'
 import {UserContext} from '../../State/UserContext'
 import Cookies from 'js-cookie'
+import Status from './Status'
 
 const ValidationSchema = Yup.object().shape({
     nicknameField: Yup.string().max(16, "Maximum length: 16")
@@ -15,7 +16,6 @@ const ValidationSchema = Yup.object().shape({
 export default function ChooseNickname(){
 
     const [, setUser] = useContext(UserContext)
-    
     return(
         
         <Formik 
@@ -33,11 +33,14 @@ export default function ChooseNickname(){
                     'Content-type':'text/plain'
                 },
                 body: values.nicknameField
-                }).then(response => response.text()).then(answer => {
+                }).then(response => {//if user timed out - update cotnext to refresh all components
+                    if(response.status!==200){setUser(Cookies.get('nickname'))};
+                    return response.text()})
+                    .then(answer => {
                     setStatus(answer);
-                    if(answer == "Nickname changed"){setUser(Cookies.get('nickname'))}
+                   
+                    if(answer == "Nickname changed"){setUser(Cookies.get('nickname'))};
                 });
-
                 setSubmitting(false);
             })()
             
@@ -46,8 +49,8 @@ export default function ChooseNickname(){
             {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, status}) => (
                 
                 <form onSubmit={handleSubmit}>    
-                <div className="form-group">
-                    <h2 className="font-weight-bold text-dark">Set your nickname</h2>
+                <div className="form-group regular-text">
+                    <h2 className="font-weight-bold">Set your nickname</h2>
                     <input type="text" 
                     className={touched.nicknameField
                         && errors.nicknameField? "form-control is-invalid":"form-control"}
@@ -59,7 +62,7 @@ export default function ChooseNickname(){
                     value={values.nicknameField}
                     />
                     <Error touched={touched.nicknameField} message={errors.nicknameField} />
-                    {<h1>{status}</h1>}  
+                    <Status statusProp={status}/>  
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Submit</button>
                 </form> 
