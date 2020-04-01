@@ -33,7 +33,7 @@ export default function Nav(){
             if(apiResponse.status===200){
                 
                 console.log("response: ",apiResponseObject)
-                //nickname cookie is passed added by backed if login was successful
+                //nickname cookie is passed added by backend if login was successful
                 setUser(Cookies.get('nickname'))
                 history.push("/")
             }else{
