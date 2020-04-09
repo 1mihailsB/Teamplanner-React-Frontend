@@ -7,3 +7,46 @@
 .regular-text{
     color: #a1a0a0
 }
+
+#navbar-container{
+    padding: 0;
+}
+
+#main-container {
+    padding : 10px;
+    height: 100vh;
+    background-color: #292b2c;
+}
+
+.google-button {
+    background: blue;
+}
+
+#nav-logo {
+    padding-right: 5px;
+    max-height: 45px;
+    width: auto;
+    height: auto;
+}
+
+.card-container{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#add-button{
+    width: 38px;
+    border: 0px;
+    padding: 0px;
+    background-color: #292b2c;
+    color: #e08c0d;
+}
+
+.card{
+    background: rgb(169, 192, 124);
+}
+
+.card-body{
+    height: auto;
+}
+
