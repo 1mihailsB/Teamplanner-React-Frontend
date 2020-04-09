@@ -23,7 +23,7 @@ export default function ChooseNickname(){
         validationSchema={ValidationSchema}
         onSubmit={(values, {setSubmitting, setStatus}) => {
             setSubmitting(true);
-            console.log("representation:", values.nicknameField);
+
             (async () => {
                 await fetch(properties.chooseNicknameUri, {
                 credentials: 'include',
@@ -33,13 +33,15 @@ export default function ChooseNickname(){
                     'Content-type':'text/plain'
                 },
                 body: values.nicknameField
-                }).then(response => {//if user timed out - update cotnext to refresh all components
-                    if(response.status!==200){setUser(Cookies.get('nickname'))};
-                    return response.text()})
+                }).then(response => {//if user timed out - response status will not be 200
+                        if(response.status!==200){//then update user cotnext to update all components
+                            setUser(Cookies.get('nickname'))
+                        }
+                        return response.text()})
                     .then(answer => {
                     setStatus(answer);
                    
-                    if(answer == "Nickname changed"){setUser(Cookies.get('nickname'))};
+                if(answer === "Nickname changed"){setUser(Cookies.get('nickname'))};
                 });
                 setSubmitting(false);
             })()
