@@ -53,7 +53,7 @@ export default function Games() {
                     <div className="card ">
                         <div className="card-body mb-0 p-0">
                             <button id="delete-game" onClick={() => deleteGame(game.id)}>
-                                <i class="fas fa-times-circle"></i>
+                                <i className="fas fa-times-circle"></i>
                             </button>
                             <h5 className="card-title h5 pl-3 pr-4">{game.title}</h5>
                         </div>
