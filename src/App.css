@@ -42,6 +42,16 @@
     color: #e08c0d;
 }
 
+#delete-game{
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    height: 5px;
+}
+
 .card{
     background: rgb(169, 192, 124);
 }
@@ -50,3 +60,16 @@
     height: auto;
 }
 
+#nicknameForm{
+    max-width: 50%;
+    min-width: 250px;
+}
+
+#mainText{
+    height: auto;
+}
+
+.empty-sizeless-div{
+    height: 0px;
+    width: 0px;
+}

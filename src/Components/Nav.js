@@ -84,7 +84,7 @@ export default function Nav(){
                             <span className="nav-link" >User <span className="sr-only">(current)</span></span>
                         </li>
                         </Link>
-                        <Link to="/about">
+                        <Link to="/games">
                         <li className="nav-item active">
                             <span className="nav-link">Games <span className="sr-only">(current)</span></span>
                         </li>

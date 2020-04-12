@@ -1,11 +1,11 @@
 import React,{useContext} from 'react'
 import * as Yup from 'yup'
 import {Formik} from 'formik'
-import Error from './Error'
+import Error from './formUtils/Error'
 import {properties} from '../../Properties/Properties'
 import {UserContext} from '../../State/UserContext'
 import Cookies from 'js-cookie'
-import Status from './Status'
+import Status from './formUtils/Status'
 
 const ValidationSchema = Yup.object().shape({
     nicknameField: Yup.string().max(16, "Maximum length: 16")
@@ -17,7 +17,7 @@ export default function ChooseNickname(){
 
     const [, setUser] = useContext(UserContext)
     return(
-        
+ 
         <Formik 
         initialValues={{nicknameField:""}}
         validationSchema={ValidationSchema}
@@ -39,10 +39,9 @@ export default function ChooseNickname(){
                         }
                         return response.text()})
                     .then(answer => {
-                    setStatus(answer);
-                   
-                if(answer === "Nickname changed"){setUser(Cookies.get('nickname'))};
-                });
+                        setStatus(answer);
+                        if(answer === "Nickname changed"){setUser(Cookies.get('nickname'))};
+                    });
                 setSubmitting(false);
             })()
             
@@ -51,7 +50,7 @@ export default function ChooseNickname(){
             {({values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, status}) => (
                 
                 <form onSubmit={handleSubmit}>    
-                <div className="form-group regular-text">
+                <div className="form-group regular-text" id="nicknameForm">
                     <h2 className="font-weight-bold">Set your nickname</h2>
                     <input type="text" 
                     className={touched.nicknameField
