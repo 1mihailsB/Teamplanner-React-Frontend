@@ -15,7 +15,7 @@ const ValidationSchema = Yup.object().shape({
     .matches("^[a-zA-Z0-9 ,:\\[\\]!@_-]{1,50}$", "Only A-Z, a-z, 0-9, []!@_- characters are allowed"),
     mainTextField: Yup.string().max(3000, "Maximum length: 3000")
     .required("Minimum length: 1")
-    .matches("^[a-zA-Z0-9 ,:;'\/!.\n\\[\\]!@_-]{1,3000}$", "Only A-Z, a-z, 0-9, []!@_- characters are allowed")
+    .matches("^[a-zA-Z0-9 ,:;'/!.\n\\[\\]!@_-]{1,3000}$", "Only A-Z, a-z, 0-9, []!@_- characters are allowed")
 });
 
 export default function CreatePlan(){
@@ -48,8 +48,8 @@ export default function CreatePlan(){
                         return response.text()})
                     .then(answer => {
                         console.log(answer);
-                        if(answer === "Game plan created"){history.push("/games")}
                         setStatus(answer);
+                        if(answer === "Game plan created"){history.push("/games")}
                     });
                     setSubmitting(false);
 
