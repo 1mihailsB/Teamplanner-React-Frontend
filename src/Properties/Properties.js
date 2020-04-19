@@ -1,15 +1,21 @@
 const backEndAddress = "http://localhost:8080/"
 
 export const properties = {
-    clientId: ,
-    backendUri: backEndAddress,
+    clientId: "586290009563-ki3e28o344hisjirre95tp6ui4sl8oh2.apps.googleusercontent.com",
 
     oauthLoginUri: backEndAddress+'oauth/login',
     oauthLogoutUri: backEndAddress+'oauth/logout',
     chooseNicknameUri: backEndAddress+'oauth/choosenickname',
 
-    getMyGamesUri: backEndAddress+'gameplans/my',
+    getMyGamesUri: backEndAddress+'gameplans/all',
+    getGameByIdUri: backEndAddress+'gameplans/getById/',
     createGameUri: backEndAddress+'gameplans/create',
-    //this uri expect an id as path variable: http://localhost:8080/gameplans/delete/15
-    deleteGameUri: backEndAddress+'gameplans/delete/'
+    editGameUri: backEndAddress+'gameplans/editById/',
+    deleteGameUri: backEndAddress+'gameplans/delete/',
+
+    getMyFriendsUri: backEndAddress+"friends/myFriends",
+    inviteFriendUri: backEndAddress+"friends/invite",
+    getIncomingRequestsUri: backEndAddress+"friends/incomingRequests",
+    acceptFriendRequestUri: backEndAddress+"friends/acceptRequest",
+    removeFriendUri: backEndAddress+"friends/removeFriend"
 }
