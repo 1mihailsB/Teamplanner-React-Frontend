@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default Error = ({touched, message}) => {
+export default function MyError  ({touched, message}) {
     if(!touched){
         return <div className="empty-sizeless-div">&nbsp;</div>
     }
