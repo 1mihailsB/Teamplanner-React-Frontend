@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
-import Error from './formUtils/Error'
+import MyError from './formUtils/MyError'
 import Status from './formUtils/Status'
 import {useHistory} from 'react-router-dom'
 import {properties} from '../../Properties/Properties'
@@ -63,12 +63,12 @@ export default function CreatePlan(){
                         <input type="text" 
                             className={touched.titleField
                                 && errors.titleField? "form-control is-invalid":"form-control"}
-                            name="titleField" id="titleFIeld"
+                            name="titleField" id="titleField"
                             placeholder="Title"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.titleField} />
-                        <Error touched={touched.titleField} message={errors.titleField} />
+                        <MyError touched={touched.titleField} message={errors.titleField} />
                         <br/>
                         <textarea type="text" rows="20"
                             className={touched.mainTextField
@@ -82,7 +82,7 @@ export default function CreatePlan(){
                             onBlur={handleBlur}
                             value={values.mainTextField} />
                             {inputLength}/3000
-                        <Error touched={touched.mainTextField} message={errors.mainTextField} />
+                        <MyError touched={touched.mainTextField} message={errors.mainTextField} />
                         <Status statusProp={status} />
                     </div>
                     <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Submit</button>

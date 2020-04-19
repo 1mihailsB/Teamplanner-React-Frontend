@@ -1,7 +1,7 @@
 import React,{useContext} from 'react'
 import * as Yup from 'yup'
 import {Formik} from 'formik'
-import Error from './formUtils/Error'
+import MyError from './formUtils/MyError'
 import {properties} from '../../Properties/Properties'
 import {UserContext} from '../../State/UserContext'
 import Cookies from 'js-cookie'
@@ -62,7 +62,7 @@ export default function ChooseNickname(){
                     onBlur={handleBlur}
                     value={values.nicknameField}
                     />
-                    <Error touched={touched.nicknameField} message={errors.nicknameField} />
+                    <MyError touched={touched.nicknameField} message={errors.nicknameField} />
                     <Status statusProp={status}/>  
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Submit</button>

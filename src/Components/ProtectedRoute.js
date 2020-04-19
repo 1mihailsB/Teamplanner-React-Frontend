@@ -1,11 +1,15 @@
-import React, {useContext} from "react"
+import React, {useContext, useEffect} from "react"
 import {Route, Redirect} from "react-router-dom"
 import {UserContext} from '../State/UserContext'
 import ChooseNickname from './Forms/ChooseNickname'
+import Cookies from 'js-cookie'
 
 export const ProtectedRoute = ({component: Component, ...rest}) =>{
-    const [user, ] = useContext(UserContext)
-
+    const [user, setUser] = useContext(UserContext)
+    useEffect(() => {
+        setUser(Cookies.get('nickname'))
+    },[setUser])
+    
     return(
         <Route {...rest}
             render={props => {
