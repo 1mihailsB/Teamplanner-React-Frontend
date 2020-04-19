@@ -34,12 +34,43 @@
     margin-right: 0;
 }
 
+.sub-bar{
+    display: inline-flex;
+}
+
+.sub-bar h1{
+    height: 20px;
+    margin-top: -10px;
+    margin-left: 15px;
+}
+
+#nickname-requests{
+    display: inline-flex;
+}
+
 #add-button{
     width: 38px;
     border: 0px;
     padding: 0px;
     background-color: #292b2c;
     color: #e08c0d;
+}
+
+#edit-button{
+    width: 38px;
+    border: 0px;
+    padding: 0px;
+    margin-top: -10px;
+    margin-left: -17px;
+    background-color: #292b2c;
+    color: #e08c0d;
+}
+
+#friends-icon {
+    color: #e08c0d;
+    background-color: #343a40;
+    margin-right: 5px;
+    border: 0px;
 }
 
 #delete-game{
@@ -49,7 +80,42 @@
     border-style: none;
     padding: 0;
     margin: 0;
-    height: 5px;
+    height: 4px;
+}
+
+#decline-friendrequest{
+    position: absolute;
+    right: 25px;
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: -100px;
+    height: 4px;
+    color: rgb(179, 14, 14);
+}
+
+#accept-friendrequest{
+    position: absolute;
+    right: 2px;
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: -100px;
+    height: 4px;
+    color: rgb(3, 124, 53);
+}
+
+#delete-game2{
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    height: 4px;
+    z-index: 100;
 }
 
 .card{
@@ -65,11 +131,93 @@
     min-width: 250px;
 }
 
-#mainText{
-    height: auto;
-}
-
 .empty-sizeless-div{
     height: 0px;
     width: 0px;
+}
+
+#game-details{
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    height: 4px;
+}
+
+.mainText {
+    max-height: 650px;
+    white-space: pre-wrap;       
+    white-space: -moz-pre-wrap;  
+    white-space: -pre-wrap;      
+    white-space: -o-pre-wrap;   
+    word-wrap: break-word; 
+}
+
+.mainText::-webkit-scrollbar, .dropdown-outer::-webkit-scrollbar {
+    width: 15px;              
+  }
+.mainText::-webkit-scrollbar-track, .dropdown-outer::-webkit-scrollbar-track {
+background: rgb(169, 192, 124);    
+}
+.mainText::-webkit-scrollbar-thumb, .dropdown-outer::-webkit-scrollbar-thumb {
+background-color: #343a40;    
+border-radius: 20px;      
+border: 3px solid rgb(169, 192, 124);  
+}
+.mainText::-webkit-scrollbar-corner, .dropdown-outer::-webkit-scrollbar-corner {
+    background: rgb(169, 192, 124);
+  }
+
+#mainTextField {
+    background-color: rgb(169, 192, 124);
+}
+
+#titleField, #nicknameField {
+    background-color: rgb(169, 192, 124);
+}
+
+.requests-container{
+    display :flex;
+    flex-direction: column;;
+}
+
+.dropdown-menu {
+    height:100px;
+    background-color: rgb(169, 192, 124);
+}
+
+.dropdown-outer{
+height: auto; /* So it autos to parent if smaller than max-height */
+max-height: 400px; /* Size you want the max for the height */
+overflow-y: scroll; 
+width: 250px;
+margin-left: 10px;;
+}
+
+.dropdown-inner{
+    width: 140px;
+}
+
+#dropdown-nicknames{
+    width: auto;
+    color: #292b2c;
+}
+
+#reject-friendrequest-button{
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    height: 4px;
+}
+
+#friend-notification{
+    color: red;
+    position: absolute;
+    right: 40px;
+    top: -5px;
 }
