@@ -19,25 +19,25 @@ export default function Game({match}){
     useEffect(() => {
         const gameId = [match['params']['id']];
         setUser(Cookies.get('nickname'));
-        fetch(properties.getGameByIdUri+gameId, {
-            credentials: 'include',
-            method: 'GET',
-            headers:{
-                'Accept':'application/json'
-            }
-        }).then(response => {
-            if(response.status===403){
-                setGame('You are not in this game');
-                return "403";
-            }
-            return response.json();
-        }).then( data => {
-            if(data.toString()!=="403"){
-                console.log(data)
-                setGame(data)
-            }
-        })
-
+        if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=="*()unset"){
+            fetch(properties.getGameByIdUri+gameId, {
+                credentials: 'include',
+                method: 'GET',
+                headers:{
+                    'Accept':'application/json'
+                }
+            }).then(response => {
+                if(response.status===403){
+                    setGame('You are not in this game');
+                    return "403";
+                }
+                return response.json();
+            }).then( data => {
+                if(data.toString()!=="403"){
+                    setGame(data)
+                }
+            })
+        }
     }, [setUser, match])
 
     const deleteGame = (gameId) => {

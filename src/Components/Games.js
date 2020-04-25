@@ -17,17 +17,19 @@ export default function Games() {
 
     useEffect(() => {
         setUser(Cookies.get('nickname'));
-        fetch(properties.getMyGamesUri, {
-            credentials: 'include',
-            method: 'GET',
-            headers:{
-                'Accept':'application/json'
-            }
-        }).then(response => {
-            return response.json();
-        }).then( data => {
-            setGames(data)
-        })
+        if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=="*()unset"){
+            fetch(properties.getMyGamesUri, {
+                credentials: 'include',
+                method: 'GET',
+                headers:{
+                    'Accept':'application/json'
+                }
+            }).then(response => {
+                return response.json();
+            }).then( data => {
+                setGames(data)
+            })
+        }
     }, [setUser])
     
     const deleteGame = (gameId) => {

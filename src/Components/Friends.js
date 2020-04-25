@@ -9,25 +9,27 @@ import ModalConfirmationDialog from './Utils/ModalConfirmationDialog'
 
 export default function Friends (){
 
-    const [, setUser] = useContext(UserContext)
+    const [user, setUser] = useContext(UserContext)
     const [friends, setFriends] = useState([])
     const history = useHistory()
     const location = useLocation()
 
     useEffect(() => {
         setUser(Cookies.get('nickname'));
-        fetch(properties.getMyFriendsUri, {
-            credentials: 'include',
-            method: 'GET',
-            headers:{
-                'Accept':'application/json'
-            }
-        }).then(response => {
-            return response.json();
-        }).then( data => {
-            setFriends(data)
-        })
-    }, [setUser])
+        if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=="*()unset"){
+            fetch(properties.getMyFriendsUri, {
+                credentials: 'include',
+                method: 'GET',
+                headers:{
+                    'Accept':'application/json'
+                }
+            }).then(response => {
+                return response.json();
+            }).then( data => {
+                setFriends(data)
+            })
+        }
+    }, [user])
 
     const deleteFriend = (friend) =>{
         (async () => {
