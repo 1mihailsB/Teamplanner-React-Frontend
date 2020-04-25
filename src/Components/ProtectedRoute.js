@@ -25,7 +25,6 @@ export const ProtectedRoute = ({component: Component, ...rest}) =>{
                         }
                     }/>
                 }else if(user === '*()unset'){
-                    
                     return <ChooseNickname {...props} />;
                 }else{
                     return(<h2 className="regular-text">Login error, please try again</h2>)

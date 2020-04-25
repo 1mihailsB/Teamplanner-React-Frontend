@@ -47,7 +47,6 @@ export default function CreatePlan(){
                         }
                         return response.text()})
                     .then(answer => {
-                        console.log(answer);
                         setStatus(answer);
                         if(answer === "Game plan created"){history.push("/games")}
                     });
