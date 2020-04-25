@@ -1,18 +1,12 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserFriends,faTimesCircle, faCheckCircle, faExclamationCircle} from '@fortawesome/free-solid-svg-icons'
-import $ from 'jquery'
 
 export default function NavFriendsDropdown(props){
 
     const requestList = props.requestList
     const declineRequest = props.declineRequestFunction
     const acceptRequest = props.acceptRequestFunction
-    const getFriendRequests = props.getRequests
-
-    $('.dropleft').unbind().on('shown.bs.dropdown', function(){
-        getFriendRequests()
-      });
 
     return(
         <div className="btn-group dropleft">

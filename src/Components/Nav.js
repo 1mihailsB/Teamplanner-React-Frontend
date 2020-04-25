@@ -6,20 +6,49 @@ import Cookies from 'js-cookie'
 import {properties} from '../Properties/Properties'
 import logo from '../team.png'
 import NavFriendsDropdown from './Forms/NavFriendsDropdown'
+import * as SockJS from 'sockjs-client'
+import Stomp from 'stompjs'
 
-export default function Nav(){
+export default function Nav(props){
 
     const [user, setUser] = useContext(UserContext)
     const [requests, setRequests] = useState([])
     const history = useHistory();
     const location = useLocation();
-    
+
+
     useEffect(() => {
         setUser(Cookies.get('nickname'))
+        console.log("user:", user)
+        getFriendRequests()
+    }, [])
+
+    useEffect(() => {
+
+        let stompClient = null
         if(user!==undefined && user!=='*()failed'){
-            getFriendRequests()
+            console.log("connecting socket")
+            stompClient = Stomp.over(new SockJS('http://localhost:8080/sockets'))
+            stompClient.connect({}, function (frame) {
+                console.log("connected ", frame);
+                stompClient.subscribe('/user/queue/friendRequests', function (notification) {
+                   if(notification.body==="Friend request"){
+                       getFriendRequests()
+                   }
+                });
+            }, function(message){
+            console.log("Notifications disconnected:",message)
+            });
+
+            return() => {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+            }
         }
-    }, [setUser, user])
+    }, [user])
+
+
     //Runs on successful Login with Google
     ////////////////////////////////////////////////////////////
     const login = (response) => {
@@ -34,8 +63,7 @@ export default function Nav(){
                 body: JSON.stringify({"authCode":response['code']})
             });
             if(apiResponse.status===200){
-                //nickname cookie is passed added by backend if login was successful
-                getFriendRequests()
+                //nickname cookie is added by backend if login was successful
                 setUser(Cookies.get('nickname'))
                 if(Cookies.get('nickname')==='*()unset'){
                     history.push("/chooseNickname")
@@ -75,25 +103,27 @@ export default function Nav(){
     }
 
     const getFriendRequests = () => {
-        
-        (async () => {
-            await fetch(properties.getIncomingRequestsUri, {
-                credentials: 'include',
-                method: 'GET',
-                headers: {
-                    'Accept':'application/json'
-                }
-            }).then(response => {
-                return response.json()
-            }).then(data => {
-                setRequests(data)
-            })
-        })()
+        if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=='*()failed'){
+            console.log(Cookies.get('nickname'), ">>> GETTING FRIENDS <<<");
+            (async () => {
+                await fetch(properties.getIncomingRequestsUri, {
+                    credentials: 'include',
+                    method: 'GET',
+                    headers: {
+                        'Accept':'application/json'
+                    }
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    setRequests(data)
+                })
+            })()
+        }
     }
 
     const declineFriendRequest = (request) => {
         (async () => {
-            console.log("decline friend");
+
             await fetch(properties.removeFriendUri , {
                 credentials: 'include',
                 method: 'DELETE',
@@ -113,7 +143,6 @@ export default function Nav(){
 
     const acceptFriendRequest = (request) => {
         (async () => {
-            console.log("accept friend");
             await fetch(properties.acceptFriendRequestUri , {
                 credentials: 'include',
                 method: 'PATCH',
@@ -122,7 +151,6 @@ export default function Nav(){
                 },
                 body: request
             }).then(response => {
-                console.log("accept request: ",response)
                getFriendRequests() 
                if(response.status === 200 && location.pathname==='/friends'){
                     history.push("/");
@@ -136,7 +164,7 @@ export default function Nav(){
         
         <nav className="navbar sticky-top navbar-expand navbar-dark bg-dark">
             <div className="container" id="navbar-container">
-                <Link to="/" onClick={getFriendRequests}>
+                <Link to="/" >
                     <img id="nav-logo" src={logo} alt="logo"/>
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,22 +173,22 @@ export default function Nav(){
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <Link to="/"  onClick={getFriendRequests}>
+                        <Link to="/"  >
                         <li className="nav-item active">
                             <span className="nav-link" href="/">Home <span className="sr-only">(current)</span></span>
                         </li>
                         </Link>
-                        <Link to="/account"  onClick={getFriendRequests}>
+                        <Link to="/" >
                         <li className="nav-item active">
-                            <span className="nav-link" >User <span className="sr-only">(current)</span></span>
+                            <span className="nav-link" href="/">Home <span className="sr-only">(current)</span></span>
                         </li>
                         </Link>
-                        <Link to="/friends"  onClick={getFriendRequests}>
+                        <Link to="/friends" >
                         <li className="nav-item active">
                             <span className="nav-link" >Friends <span className="sr-only">(current)</span></span>
                         </li>
                         </Link>
-                        <Link to="/games"  onClick={getFriendRequests}>
+                        <Link to="/games" >
                         <li className="nav-item active">
                             <span className="nav-link">Games <span className="sr-only">(current)</span></span>
                         </li>
