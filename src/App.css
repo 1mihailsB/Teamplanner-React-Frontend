@@ -14,7 +14,7 @@
 
 #main-container {
     padding : 10px;
-    height: 100vh;
+    min-height: 90vh;
     background-color: #292b2c;
 }
 
@@ -44,6 +44,22 @@
     margin-left: 15px;
 }
 
+.plan-members{
+    display: flex;
+    flex-wrap: wrap;
+    height: auto; /* So it autos to parent if smaller than max-height */
+    max-height: 118px; /* Size you want the max for the height */
+    overflow-y: scroll; 
+    width: auto;
+    margin-left: 10px;
+}
+
+.game-member{
+    background-color: rgb(192, 209, 155);
+    display: flex;
+    flex-direction: row;
+}
+
 #nickname-requests{
     display: inline-flex;
 }
@@ -52,13 +68,29 @@
     width: 38px;
     border: 0px;
     padding: 0px;
+    outline: none;
     background-color: #292b2c;
+    color: #e08c0d;
+}
+
+#add-member{
+    position: relative;
+    top: 6px;
+    left: 5px;
+    width: 15px;
+    margin-top: 0px;
+    border: 0px;
+    outline: none;
+    height: 6px;
+    padding: 0px;
+    background-color: rgb(169, 192, 124);
     color: #e08c0d;
 }
 
 #edit-button{
     width: 38px;
     border: 0px;
+    outline: none;
     padding: 0px;
     margin-top: -10px;
     margin-left: -17px;
@@ -71,6 +103,7 @@
     background-color: #343a40;
     margin-right: 5px;
     border: 0px;
+    outline: none;
 }
 
 #delete-game{
@@ -81,6 +114,17 @@
     padding: 0;
     margin: 0;
     height: 4px;
+}
+
+#remove-gamemember{
+
+    background: transparent;
+    border-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 1.5px;
+    height: 4px;
+    color: rgb(179, 14, 14);
 }
 
 #decline-friendrequest{
@@ -147,7 +191,8 @@
 }
 
 .mainText {
-    max-height: 650px;
+    /* max-height: 490px; */
+    max-height: 52vh;
     white-space: pre-wrap;       
     white-space: -moz-pre-wrap;  
     white-space: -pre-wrap;      
@@ -155,21 +200,36 @@
     word-wrap: break-word; 
 }
 
-.mainText::-webkit-scrollbar, .dropdown-outer::-webkit-scrollbar {
+.mainText::-webkit-scrollbar, .dropdown-outer::-webkit-scrollbar, .plan-members::-webkit-scrollbar {
     width: 15px;              
-  }
-.mainText::-webkit-scrollbar-track, .dropdown-outer::-webkit-scrollbar-track {
-background: rgb(169, 192, 124);    
 }
-.mainText::-webkit-scrollbar-thumb, .dropdown-outer::-webkit-scrollbar-thumb {
-background-color: #343a40;    
-border-radius: 20px;      
-border: 3px solid rgb(169, 192, 124);  
+#addMemberDropdown::-webkit-scrollbar {
+    width: 15px;              
 }
-.mainText::-webkit-scrollbar-corner, .dropdown-outer::-webkit-scrollbar-corner {
+.mainText::-webkit-scrollbar-track, .plan-members::-webkit-scrollbar-track {
     background: rgb(169, 192, 124);
-  }
+}
 
+#addMemberDropdown::-webkit-scrollbar-track, .dropdown-outer::-webkit-scrollbar-track {
+    background-color: rgb(192, 209, 155);  
+}
+.mainText::-webkit-scrollbar-thumb, .dropdown-outer::-webkit-scrollbar-thumb, .plan-members::-webkit-scrollbar-thumb {
+    background-color: #343a40;    
+    border-radius: 20px;      
+    border: 3px solid rgb(169, 192, 124);  
+}
+
+#addMemberDropdown::-webkit-scrollbar-thumb {
+    background-color: #343a40;    
+    border-radius: 20px;      
+    border: 3px solid rgb(192, 209, 155);     
+}
+.mainText::-webkit-scrollbar-corner, .dropdown-outer::-webkit-scrollbar-corner, .plan-members::-webkit-scrollbar-corner {
+    background: rgb(169, 192, 124);
+}
+#addMemberDropdown::-webkit-scrollbar-corner {
+    background-color: rgb(192, 209, 155);   
+}
 #mainTextField {
     background-color: rgb(169, 192, 124);
 }
@@ -180,12 +240,13 @@ border: 3px solid rgb(169, 192, 124);
 
 .requests-container{
     display :flex;
-    flex-direction: column;;
+    flex-direction: column;
+    width: auto;
 }
 
 .dropdown-menu {
-    height:100px;
-    background-color: rgb(169, 192, 124);
+    
+    background-color: rgb(192, 209, 155);
 }
 
 .dropdown-outer{
@@ -196,6 +257,11 @@ width: 250px;
 margin-left: 10px;;
 }
 
+#gamesDropdown{
+    min-width: 330px;
+    width: auto;
+}
+
 .dropdown-inner{
     width: 140px;
 }
@@ -203,6 +269,16 @@ margin-left: 10px;;
 #dropdown-nicknames{
     width: auto;
     color: #292b2c;
+}
+
+#addMemberDropdown{
+    background-color: rgb(192, 209, 155);
+    height:100px;
+    height: auto; /* So it autos to parent if smaller than max-height */
+    max-height: 500px; /* Size you want the max for the height */
+    overflow-y: scroll; 
+    width: 250px;
+    margin-left: 10px;
 }
 
 #reject-friendrequest-button{
@@ -220,4 +296,30 @@ margin-left: 10px;;
     position: absolute;
     right: 40px;
     top: -5px;
+}
+
+#game-notification{
+    color: red;
+    position: absolute;
+    right: 27px;
+    top: -5px;
+}
+
+#welcome{
+    text-align: center;
+}
+
+#exampleModalLongTitle{
+    max-width: 100%;
+    width: auto;
+}
+
+#modalClose{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+
+.modal-content {
+    word-wrap: break-word;
 }
