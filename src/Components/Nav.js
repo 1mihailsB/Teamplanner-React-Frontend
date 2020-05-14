@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import {properties} from '../Properties/Properties'
 import logo from '../team.png'
 import NavFriendsDropdown from './Forms/NavFriendsDropdown'
+import NavGameinvitesDropdown from './Forms/NavGameinvitesDropdown'
 import * as SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 
@@ -13,39 +14,44 @@ export default function Nav(props){
 
     const [user, setUser] = useContext(UserContext)
     const [requests, setRequests] = useState([])
+    const [gameInvites, setGameInvites] = useState([])
     const history = useHistory();
     const location = useLocation();
 
 
     useEffect(() => {
         setUser(Cookies.get('nickname'))
-        console.log("user:", user)
         getFriendRequests()
-    }, [])
+        getGameInvites()
+    }, [setUser])
 
     useEffect(() => {
 
         let stompClient = null
-        if(user!==undefined && user!=='*()failed'){
-            console.log("connecting socket")
+        if(user!==undefined && user!=='*()failed' && user!=='*()unset'){
             stompClient = Stomp.over(new SockJS('http://localhost:8080/sockets'))
+            // stompClient.debug = null
             stompClient.connect({}, function (frame) {
-                console.log("connected ", frame);
-                stompClient.subscribe('/user/queue/friendRequests', function (notification) {
+                stompClient.subscribe('/user/queue/requests', function (notification) {
                    if(notification.body==="Friend request"){
                        getFriendRequests()
+                   }else if(notification.body==="Game invite"){
+                       getGameInvites()
                    }
                 });
             }, function(message){
-            console.log("Notifications disconnected:",message)
+                if(message.startsWith("Whoops!")){
+                    history.push("/")
+                    history.push(location.pathname)
+                }
             });
-
+        }
             return() => {
                 if (stompClient !== null) {
                     stompClient.disconnect();
                 }
             }
-        }
+        
     }, [user])
 
 
@@ -104,7 +110,6 @@ export default function Nav(props){
 
     const getFriendRequests = () => {
         if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=='*()failed'){
-            console.log(Cookies.get('nickname'), ">>> GETTING FRIENDS <<<");
             (async () => {
                 await fetch(properties.getIncomingRequestsUri, {
                     credentials: 'include',
@@ -116,6 +121,24 @@ export default function Nav(props){
                     return response.json()
                 }).then(data => {
                     setRequests(data)
+                })
+            })()
+        }
+    }
+
+    const getGameInvites = () => {
+        if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=='*()failed'){
+            (async () => {
+                await fetch(properties.incomingGameInvites, {
+                    credentials: 'include',
+                    method: 'GET',
+                    headers: {
+                        'Accept':'application/json'
+                    }
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    setGameInvites(data)
                 })
             })()
         }
@@ -133,10 +156,21 @@ export default function Nav(props){
                 body: request
             }).then(response => {
                 getFriendRequests()
-               if(response.status === 200 && location.pathname==='/friends'){
-                    history.push("/");
-                    history.push("/friends")
-               }
+            })
+        })();
+    }
+
+    const declineGameInvite = (gameId) => {
+        (async () => {
+
+            await fetch(properties.declineGameInvite+gameId , {
+                credentials: 'include',
+                method: 'DELETE',
+                headers: {
+                    'Content-type':'text/plain'
+                },
+            }).then(response => {
+                getGameInvites()
             })
         })();
     }
@@ -160,6 +194,20 @@ export default function Nav(props){
         })();
     }
 
+    const acceptGameInvite = (gameId) => {
+        (async () => {
+            await fetch(properties.acceptGameInvite+gameId , {
+                credentials: 'include',
+                method: 'PATCH',
+                headers: {
+                    'Content-type':'text/plain'
+                },
+            }).then(response => {
+                getGameInvites() 
+            })
+        })();
+    }
+
     return(
         
         <nav className="navbar sticky-top navbar-expand navbar-dark bg-dark">
@@ -178,11 +226,6 @@ export default function Nav(props){
                             <span className="nav-link" href="/">Home <span className="sr-only">(current)</span></span>
                         </li>
                         </Link>
-                        <Link to="/" >
-                        <li className="nav-item active">
-                            <span className="nav-link" href="/">Home <span className="sr-only">(current)</span></span>
-                        </li>
-                        </Link>
                         <Link to="/friends" >
                         <li className="nav-item active">
                             <span className="nav-link" >Friends <span className="sr-only">(current)</span></span>
@@ -196,6 +239,9 @@ export default function Nav(props){
                     </ul>
                     {user!==undefined && user!=='*()failed' && user!=='*()unset' ?
                         <div id="nickname-requests"> 
+                            <NavGameinvitesDropdown acceptRequestFunction={acceptGameInvite} getRequests={getFriendRequests}
+                            declineGameInviteFunction={declineGameInvite} gameInvites={gameInvites}/>
+
                             <NavFriendsDropdown acceptRequestFunction={acceptFriendRequest} getRequests={getFriendRequests}
                             declineRequestFunction={declineFriendRequest} requestList={requests}/>
 
