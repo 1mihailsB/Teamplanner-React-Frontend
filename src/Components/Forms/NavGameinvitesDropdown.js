@@ -7,7 +7,7 @@ export default function NavGameinvitesDropdown(props){
     const declineRequest = props.declineGameInviteFunction
     const acceptRequest = props.acceptRequestFunction
     const gameInvites = props.gameInvites
-
+    console.log(gameInvites)
 
     return(
         <div className="btn-group dropleft">
@@ -15,7 +15,8 @@ export default function NavGameinvitesDropdown(props){
                 aria-haspopup="true" aria-expanded="false" >
                 <FontAwesomeIcon size="2x" icon={faBell} />
                 {gameInvites.length === 0 ? null :
-                <i id="game-notification"><FontAwesomeIcon size="1x" icon={faExclamationCircle}/></i>}
+                <i id="game-notification"><FontAwesomeIcon size="1x" icon={faExclamationCircle}/></i>
+                }
             </button>
             <div className="dropdown-menu mt-5 pl-1 dropdown-outer" id="gamesDropdown">
                 <h6 className="regular-text text-dark">Incoming game invites</h6>
