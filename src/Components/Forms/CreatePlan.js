@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useContext} from 'react'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
 import MyError from './formUtils/MyError'
@@ -21,7 +21,6 @@ const ValidationSchema = Yup.object().shape({
 export default function CreatePlan(){
 
     const[, setUser] = useContext(UserContext)
-    const [inputLength, setInputLength] = useState(0)
     const history = useHistory()
     
 
@@ -76,11 +75,10 @@ export default function CreatePlan(){
                             placeholder="Details, Maximum 3000 characters"
                             onChange={e => {
                                 handleChange(e)
-                                setInputLength(document.getElementById('mainTextField').value.length)
                             }}
                             onBlur={handleBlur}
                             value={values.mainTextField} />
-                            {inputLength}/3000
+                            {values.mainTextField.length}/3000
                         <MyError touched={touched.mainTextField} message={errors.mainTextField} />
                         <Status statusProp={status} />
                     </div>
