@@ -3,6 +3,12 @@ import React from 'react'
 export default function ModalConfirmationDialog(props) {
 
     const functionArgument = props.functionArgument
+    let idArgument = ""
+    if(Array.isArray(props.functionArgument)){
+        idArgument = props.functionArgument[0]+props.functionArgument[1]
+    }else{
+        idArgument = props.functionArgument
+    }
     const functionToExecute = props.functionToExecute
     const warningArgument = props.warningArgument
     const actionPrefix = props.actionPrefix
@@ -10,14 +16,14 @@ export default function ModalConfirmationDialog(props) {
 
     
     return(
-        <div className="modal fade bd-example-modal-lg" id={"modalPopupId"+actionPrefix+functionArgument}
+        <div className="modal fade bd-example-modal-lg" id={"modalPopupId"+actionPrefix+idArgument}
         tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div className="modal-content" name={"modal-"+warningArgument}>
                     <div className="modal-header">
                         <h4 className="modal-title" id="exampleModalLongTitle">{warningText} {warningArgument}</h4>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span> 
+                        <button type="button" className="close" id="modalClose" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span> 
                         </button>
                     </div>
                     <div className="modal-body">
