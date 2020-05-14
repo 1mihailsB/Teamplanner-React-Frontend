@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {Formik} from 'formik'
 import * as Yup from 'yup'
 import MyError from './formUtils/MyError'
@@ -15,15 +15,42 @@ const ValidationSchema = Yup.object().shape({
     .matches("^[a-zA-Z0-9 ,:;'/!.\n\\[\\]!@_-]{1,3000}$", "Only A-Z, a-z, 0-9, []!@_- characters are allowed")
 });
 
-export default function EditPlanText(props){
+export default function EditPlanText({match}){
 
     const[, setUser] = useContext(UserContext)
-    const [inputLength, setInputLength] = useState(0)
     const history = useHistory()
     const {id} = useParams()
+    const [gameDetails, setGameDetails] = useState('')
+
+    useEffect(() => {
+        const gameId = [match['params']['id']];
+        setUser(Cookies.get('nickname'));
+        if(Cookies.get('nickname')!==undefined && Cookies.get('nickname')!=="*()unset"){
+            fetch(properties.getGameByIdUri+gameId, {
+                credentials: 'include',
+                method: 'GET',
+                headers:{
+                    'Accept':'application/json'
+                }
+            }).then(response => {
+                if(response.status===403){
+                    setGameDetails('You are not in this game');
+                    return "403";
+                }
+                return response.json();
+            }).then( data => {
+                if(data.toString()!=="403"){
+                    setGameDetails(data.mainText)
+                }
+            })
+        }
+    }, [match, setUser])
+
     return(
+        
         <Formik
-            initialValues={{mainTextField: props.location.state.mainText}}
+            enableReinitialize={true}
+            initialValues={{mainTextField: gameDetails}}
             validationSchema={ValidationSchema}
             onSubmit={(values, {setSubmitting, setStatus}) =>{
                 setSubmitting(true);
@@ -45,8 +72,7 @@ export default function EditPlanText(props){
                         setStatus(answer);
                         if(answer === "Game plan edited"){history.push("/game/"+id)}
                     });
-                    setSubmitting(false);
-
+                setSubmitting(false);
             }
         }
         >
@@ -62,11 +88,10 @@ export default function EditPlanText(props){
 
                             onChange={e => {
                                 handleChange(e)
-                                setInputLength(document.getElementById('mainTextField').value.length)
                             }}
                             onBlur={handleBlur}
                             value={values.mainTextField} />
-                            {inputLength}/3000
+                        {values.mainTextField.length}/3000
                         <MyError touched={touched.mainTextField} message={errors.mainTextField} />
                         <Status statusProp={status} />
                     </div>
