@@ -59,14 +59,14 @@ export default function Games() {
                         <div className="card-body mb-0 p-0">
                             <ModalConfirmationDialog functionArgument={game.id} functionToExecute={deleteGame} 
                             actionPrefix="game" warningText="Deleting: " warningArgument={game.title}/>
-                            <button id="delete-game" data-toggle="modal" data-target={"#modalPopupId"+"game"+game.id}>
+                            <button id="delete-game" data-toggle="modal" data-target={"#modalPopupIdgame"+game.id}>
                                 <FontAwesomeIcon icon={faTimesCircle}/>
                             </button>
                             <h5 className="card-title h5 pl-3 pr-4">{game.title}</h5>
                         </div>
                         <hr className="mb-0 mt-0"/>
                         <h6 className="ml-3">By: {game.authorNickname}</h6>
-                        <div className="card-footer">
+                        <div className="card-footer pl-3">
                             <small className="text-muted">Created: {new Date(game.creationDateTime).toLocaleString("en-GB")+
                             " GMT+"+new Date().getTimezoneOffset()/-60} 
                             </small>

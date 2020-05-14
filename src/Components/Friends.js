@@ -29,7 +29,7 @@ export default function Friends (){
                 setFriends(data)
             })
         }
-    }, [user])
+    }, [user, setUser])
 
     const deleteFriend = (friend) =>{
         (async () => {
@@ -67,7 +67,7 @@ export default function Friends (){
                     <div className="card-body mb-0 p-0">
                         <ModalConfirmationDialog functionArgument={friend} functionToExecute={deleteFriend}
                         actionPrefix="deleteFriend" warningText="Removing friend: " warningArgument={friend}/>
-                        <button id="delete-game" data-toggle="modal" data-target={"#modalPopupId"+'deleteFriend'+friend}>
+                        <button id="delete-game" data-toggle="modal" data-target={"#modalPopupIddeleteFriend"+friend}>
                             <FontAwesomeIcon icon={faTimesCircle}/>
                         </button>
                         <h5 className="card-title h5 pl-3 pr-4">{friend}</h5>

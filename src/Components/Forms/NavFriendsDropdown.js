@@ -11,10 +11,10 @@ export default function NavFriendsDropdown(props){
     return(
         <div className="btn-group dropleft">
             <button type="button" id="friends-icon" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false" >
                 <FontAwesomeIcon size="2x" icon={faUserFriends} />
                 {requestList.length === 0 ? null :
-                <i id="friend-notification"><FontAwesomeIcon size="2x" icon={faExclamationCircle}/></i>}
+                <i id="friend-notification"><FontAwesomeIcon size="1x" icon={faExclamationCircle}/></i>}
             </button>
             <div className="dropdown-menu mt-5 pl-1 dropdown-outer" id="friendsDropdown">
                 <h6 className="regular-text text-dark">Incoming requests</h6>
