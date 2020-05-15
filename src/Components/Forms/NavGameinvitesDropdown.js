@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserFriends,faTimesCircle, faCheckCircle, faExclamationCircle, faBell} from '@fortawesome/free-solid-svg-icons'
+import { faTimesCircle, faCheckCircle, faExclamationCircle, faBell} from '@fortawesome/free-solid-svg-icons'
 
 export default function NavGameinvitesDropdown(props){
 
