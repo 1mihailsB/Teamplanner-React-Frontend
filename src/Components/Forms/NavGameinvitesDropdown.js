@@ -7,7 +7,6 @@ export default function NavGameinvitesDropdown(props){
     const declineRequest = props.declineGameInviteFunction
     const acceptRequest = props.acceptRequestFunction
     const gameInvites = props.gameInvites
-    console.log(gameInvites)
 
     return(
         <div className="btn-group dropleft">

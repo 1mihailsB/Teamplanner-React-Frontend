@@ -63,7 +63,6 @@ export default function AddGameMember(props){
     }, [])
 
 
-    let rangearray = new Array(50).fill("x")
     return(
         <div className="btn-group dropright" >
             <button type="button" id="add-member" data-toggle="dropdown"

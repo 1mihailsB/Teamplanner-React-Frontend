@@ -32,8 +32,6 @@ export default function Game(props){
         background: "rgb(161, 192, 196)"
     }
 
-    let rangeArray = new Array(200).fill("x")
-
     useEffect(() => {
 
         const gameId = [match['params']['id']];
@@ -71,7 +69,6 @@ export default function Game(props){
     }
 
     const removeGameMember = (nicknameAndGameId) => {
-        console.log(nicknameAndGameId[1])
         fetch(properties.removeGameMember+nicknameAndGameId[1], {
             credentials: 'include',
             method: 'DELETE',
@@ -82,7 +79,6 @@ export default function Game(props){
     }
   
     const leaveGame = (nicknameAndGameId) => {
-        console.log(nicknameAndGameId[1])
         fetch(properties.removeGameMember+nicknameAndGameId[1], {
             credentials: 'include',
             method: 'DELETE',

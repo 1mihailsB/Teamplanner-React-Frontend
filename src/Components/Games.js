@@ -34,7 +34,6 @@ export default function Games() {
             }).then(response => {
                 return response.json();
             }).then( data => {
-                console.log("GAMES---", data)
                 setGames(data)
             })
         }
@@ -51,7 +50,6 @@ export default function Games() {
     }
 
     const leaveGame = (nicknameAndGameId) => {
-        console.log(nicknameAndGameId[1])
         fetch(properties.removeGameMember+nicknameAndGameId[1], {
             credentials: 'include',
             method: 'DELETE',
