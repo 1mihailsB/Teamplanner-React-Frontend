@@ -11,9 +11,16 @@ import { faInfoCircle, faPlus, faTimesCircle} from '@fortawesome/free-solid-svg-
 export default function Games() {
 
     const [games, setGames] = useState([])
-    const [, setUser] = useContext(UserContext)
+    const [user, setUser] = useContext(UserContext)
     const history = useHistory()
     const location = useLocation()
+
+    const ownerBackground ={
+        background: "rgb(169, 192, 124)"
+    }
+    const guestBackground = {
+        background: "rgb(124, 170, 192)"
+    }
 
     useEffect(() => {
         setUser(Cookies.get('nickname'));
@@ -27,6 +34,7 @@ export default function Games() {
             }).then(response => {
                 return response.json();
             }).then( data => {
+                console.log("GAMES---", data)
                 setGames(data)
             })
         }
@@ -42,6 +50,18 @@ export default function Games() {
         })
     }
 
+    const leaveGame = (nicknameAndGameId) => {
+        console.log(nicknameAndGameId[1])
+        fetch(properties.removeGameMember+nicknameAndGameId[1], {
+            credentials: 'include',
+            method: 'DELETE',
+            body: nicknameAndGameId[0]
+        }).then(response => {
+            history.push("/")
+            history.push(location.pathname)
+        })
+    }
+
     return(
         <div id="card-container" className="card-deck">
 
@@ -51,17 +71,31 @@ export default function Games() {
                     <FontAwesomeIcon icon={faPlus} size="2x"/>
                 </button>
             </Link>
-            <h1 className="regular-text">Games</h1>
+            <h1 className="regular-text">Plans</h1>
             </div>
             {games.map(game => (
                 <div className="col-sm-12 col-md-6 col-lg-4 mt-2 mb-4" key={game.id}>
-                    <div className="card ">
+                    <div className="card" style={game.authorNickname === user ? ownerBackground : guestBackground}>
                         <div className="card-body mb-0 p-0">
-                            <ModalConfirmationDialog functionArgument={game.id} functionToExecute={deleteGame} 
-                            actionPrefix="game" warningText="Deleting: " warningArgument={game.title}/>
-                            <button id="delete-game" data-toggle="modal" data-target={"#modalPopupIdgame"+game.id}>
-                                <FontAwesomeIcon icon={faTimesCircle}/>
-                            </button>
+                            {game.authorNickname === user ?
+                                <React.Fragment>
+                                    <ModalConfirmationDialog functionArgument={game.id} functionToExecute={deleteGame} 
+                                    actionPrefix="game" warningText="Deleting: " warningArgument={game.title}/>
+                                    <button id="delete-game" data-toggle="modal" data-target={"#modalPopupIdgame"+game.id}>
+                                        <FontAwesomeIcon icon={faTimesCircle}/>
+                                    </button>
+                                </React.Fragment>
+                                :
+                                <React.Fragment>
+                                    <ModalConfirmationDialog functionArgument={[user, game.id]} 
+                                    functionToExecute={leaveGame} actionPrefix="leaveGame" warningText="Leaving plan: " 
+                                    warningArgument={game.title}/>
+                                    <button id="delete-game" data-toggle="modal" data-target={"#modalPopupIdleaveGame"+user+game.id}>
+                                    <FontAwesomeIcon icon={faTimesCircle}/>
+                                    </button>
+                                </React.Fragment>
+                            }
+                            
                             <h5 className="card-title h5 pl-3 pr-4">{game.title}</h5>
                         </div>
                         <hr className="mb-0 mt-0"/>
