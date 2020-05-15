@@ -5,14 +5,12 @@ import $ from 'jquery'
 import {properties} from "../../Properties/Properties"
 import Cookies from 'js-cookie'
 import {UserContext} from '../../State/UserContext'
-import {useHistory, useLocation} from "react-router-dom"
+
 
 export default function AddGameMember(props){
 
     const [invitableFriends, setInvitableFriends] = useState([])
     const[, setUser] = useContext(UserContext)
-    const history = useHistory();
-    const location = useLocation();
 
     const getInvitableMembers = () => {
         const gameId = props.gameId;
@@ -61,9 +59,11 @@ export default function AddGameMember(props){
     
     useEffect(() => {
         getInvitableMembers()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
+    let rangearray = new Array(50).fill("x")
     return(
         <div className="btn-group dropright" >
             <button type="button" id="add-member" data-toggle="dropdown"
