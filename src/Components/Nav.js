@@ -48,11 +48,12 @@ export default function Nav(props){
         }
             return() => {
                 if (stompClient !== null) {
-                    stompClient.disconnect();
+                    if(stompClient.status === 'CONNECTED') stompClient.disconnect();
                 }
             }
         
-    }, [user])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [history, user])
 
 
     //Runs on successful Login with Google
@@ -203,7 +204,11 @@ export default function Nav(props){
                     'Content-type':'text/plain'
                 },
             }).then(response => {
-                getGameInvites() 
+                getGameInvites()
+                if(response.status === 200 && location.pathname==='/games'){
+                    history.push("/");
+                    history.push("/games")
+               }
             })
         })();
     }
@@ -233,7 +238,7 @@ export default function Nav(props){
                         </Link>
                         <Link to="/games" >
                         <li className="nav-item active">
-                            <span className="nav-link">Games <span className="sr-only">(current)</span></span>
+                            <span className="nav-link">Plans <span className="sr-only">(current)</span></span>
                         </li>
                         </Link>
                     </ul>
