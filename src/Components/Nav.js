@@ -30,7 +30,7 @@ export default function Nav(props){
         let stompClient = null
         if(user!==undefined && user!=='*()failed' && user!=='*()unset'){
             stompClient = Stomp.over(new SockJS('http://localhost:8080/sockets'))
-            // stompClient.debug = null
+            stompClient.debug = null
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/user/queue/requests', function (notification) {
                    if(notification.body==="Friend request"){
