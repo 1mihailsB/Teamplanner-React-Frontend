@@ -1,7 +1,7 @@
 const backEndAddress = "http://localhost:8080/"
 
 export const properties = {
-    clientId: "586290009563-ki3e28o344hisjirre95tp6ui4sl8oh2.apps.googleusercontent.com",
+    clientId: "524272934250-0eeakh761npvpo8th9s1lepqobgebjj5.apps.googleusercontent.com",
 
     oauthLoginUri:              backEndAddress+'oauth/login',
     oauthLogoutUri:             backEndAddress+'oauth/logout',
