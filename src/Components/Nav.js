@@ -29,7 +29,7 @@ export default function Nav(props){
 
         let stompClient = null
         if(user!==undefined && user!=='*()failed' && user!=='*()unset'){
-            stompClient = Stomp.over(new SockJS('http://localhost:8080/sockets'))
+            stompClient = Stomp.over(new SockJS(properties.websocketsUri))
             stompClient.debug = null
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/user/queue/requests', function (notification) {
@@ -218,13 +218,13 @@ export default function Nav(props){
         <nav className="navbar sticky-top navbar-expand navbar-dark bg-dark">
             <div className="container" id="navbar-container">
                 <Link to="/" >
-                    <img id="nav-logo" src={logo} alt="logo"/>
+                    <img id="nav-logo" src={logo} alt="logo" />
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <div className="collapse navbar-collapse pl-4" id="navbarSupportedContent" >
                     <ul className="navbar-nav mr-auto">
                         <Link to="/"  >
                         <li className="nav-item active">

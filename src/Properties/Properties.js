@@ -1,7 +1,9 @@
-const backEndAddress = "http://localhost:8080/"
+const backEndAddress = "https://springboot-teamplanner.herokuapp.com/"
 
 export const properties = {
     clientId: "524272934250-0eeakh761npvpo8th9s1lepqobgebjj5.apps.googleusercontent.com",
+
+    websocketsUri:              backEndAddress+"sockets",
 
     oauthLoginUri:              backEndAddress+'oauth/login',
     oauthLogoutUri:             backEndAddress+'oauth/logout',
