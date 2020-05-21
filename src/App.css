@@ -9,17 +9,19 @@
 }
 
 .welcome{
-    padding-top: 20%;
-    color: #f0c977;
+    padding-top: 2rem;
+    color: #9bafe5;
     padding-left: 5%;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .welcome-description{
+
     max-width: 85%;
-    padding-top: 3rem;
-    font-weight: 400;
-    font-size: 1.34rem;
+    padding-top: 3.5rem;
+    font-weight: 310;
+    font-size: 1.42rem;
+    padding-left: 12rem;
 }
 .welcome-description p{
     margin-bottom: 0;
@@ -333,6 +335,7 @@ margin-left: 10px;;
 
 #welcome{
     text-align: center;
+    font-weight: 400;
 }
 
 #exampleModalLongTitle{

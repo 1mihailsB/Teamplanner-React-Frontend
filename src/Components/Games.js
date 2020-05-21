@@ -59,12 +59,7 @@ export default function Games() {
             history.push(location.pathname)
         })
     }
-    const rangearray = new Array(15).fill({
-        id: 5,
-        authorNickname: "range",
-        title: "title",
-        creationDateTime: Date.now()
-    })
+
     return(
         <div id="card-container" className="card-deck">
 
