@@ -1,4 +1,4 @@
-const backEndAddress = "https://teamplanner-springboot-rest.ey.r.appspot.com/"
+const backEndAddress = "https://teamplanner.xyz/"
 
 export const properties = {
     clientId: "524272934250-0eeakh761npvpo8th9s1lepqobgebjj5.apps.googleusercontent.com",
