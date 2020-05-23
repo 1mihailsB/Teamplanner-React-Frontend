@@ -61,12 +61,13 @@ export default function Nav(props){
     const login = (response) => {
         (async () => {
             const apiResponse  = await fetch(properties.oauthLoginUri, {
-                credentials: 'same-origin',
+                
                 method: 'POST',
                 headers: {
                     'Accept':'application/json',
                     'Content-type':'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify({"authCode":response['code']})
             });
             if(apiResponse.status===200){
